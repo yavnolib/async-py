@@ -5,7 +5,7 @@ import asyncio
 class AbstractModel:
     @abc.abstractmethod
     def compute(self):
-        ...
+        pass
 
 
 class Handler:
@@ -20,3 +20,4 @@ class Handler:
         # отличается от времени исполнения нескольких таких корутин, запущенных конкурентно.
         #
         # YOU CODE GOES HERE
+        pass
