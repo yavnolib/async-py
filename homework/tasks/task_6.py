@@ -7,7 +7,7 @@ class AbstractLongTaskCreator:
     # Этот класс реализован в тестах, вам не нужно его трогать.
     @abc.abstractmethod
     def create_long_task(self) -> Coroutine:
-        pass
+        ...
 
 
 class BackgroundCoroutinesWatcher:
@@ -32,12 +32,13 @@ class BackgroundCoroutinesWatcher:
         # Здесь необходимо реализовать отмену корутин, которые ещё не успели завершиться.
         #
         # YOUR CODE GOES HERE
-        _, pending = await asyncio.wait(self._running_tasks, timeout=0.1)
+        _, pending = await asyncio.wait(self._running_tasks, timeout=0)
+
         for t in pending:
             t.cancel()
             self._remove_from_running_task(t)
 
-        print(f'{self._running_tasks=}')
+        # print(f'{self._running_tasks=}')
 
 
 class FastHandlerWithLongBackgroundTask:
