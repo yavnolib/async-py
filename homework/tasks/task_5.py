@@ -10,10 +10,16 @@ async def limit_execution_time(coro: Coroutine, max_execution_time: float) -> No
     # время.
     #
     # YOUR CODE GOES HERE
+    async with asyncio.timeout(max_execution_time):
+        await coro
 
 
 async def limit_execution_time_many(*coros: Coroutine, max_execution_time: float) -> None:
     # Функция эквивалентна limit_execution_time, но корутин на вход приходит несколько.
     #
     # YOUR CODE GOES HERE
+    tasks = [asyncio.create_task(coro) for coro in coros]
+    _, pending = await asyncio.wait(tasks, timeout=max_execution_time)
 
+    for t in pending:
+        t.cancel()
